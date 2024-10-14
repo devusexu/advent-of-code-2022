@@ -2,6 +2,6 @@
 
 require __DIR__ . "/../../vendor/autoload.php";
 
-use Xu\AdventOfCode2022\day1\Solution;
+use Xu\AdventOfCode2022\day1\Bonus;
 
-echo Solution::solve() . "\n";
+echo Bonus::solve() . "\n";
