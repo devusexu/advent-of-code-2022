@@ -1,0 +1,30 @@
+{
+    "name": "xu/advent-of-code-2022",
+    "autoload": {
+        "psr-4": {
+            "Xu\\AdventOfCode2022\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "xu",
+            "email": "devusexu@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*",
+        "phpmd/phpmd": "*",
+        "phpstan/phpstan": "*"
+    },
+    "scripts": {
+        "lint": [
+            "@lint:style",
+            "@lint:md",
+            "@lint:stan"
+        ],
+        "lint:style": "phpcs --standard=PSR12 src",
+        "lint:md": "phpmd src text cleancode,codesize,controversial,design,naming,unusedcode",
+        "lint:stan": "phpstan analyse src --level=5",
+        "fix": "phpcbf --standard=PSR12 src"
+    }}
