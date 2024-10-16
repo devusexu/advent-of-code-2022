@@ -8,9 +8,10 @@ use SplFileObject;
 
 class Bonus
 {
-    public static function solve(): int
+    public function solve(): int
     {
         $file = new SplFileObject("input");
+        $solution = new Solution();
         $pairCount = 0;
 
         while (!$file->eof()) {
@@ -18,14 +19,14 @@ class Bonus
             $line = trim($file->fgets());
 
             // find if a range is overlapped with another range
-            if (self::isOverlapped(Solution::getPair($line))) {
+            if ($this->isOverlapped($solution->getPair($line))) {
                 $pairCount++;
             }
         }
 
         return $pairCount;
     }
-    private static function isOverlapped(array $pair): bool
+    private function isOverlapped(array $pair): bool
     {
         return ($pair[1][1] >= $pair[0][0] && $pair[1][1] <= $pair[0][1])
             || ($pair[1][0] >= $pair[0][0] && $pair[1][0] <= $pair[0][1])
