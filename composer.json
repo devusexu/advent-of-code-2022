@@ -11,7 +11,9 @@
             "email": "devusexu@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php-ds/php-ds": "^1.5"
+    },
     "require-dev": {
         "squizlabs/php_codesniffer": "*",
         "phpmd/phpmd": "*",
