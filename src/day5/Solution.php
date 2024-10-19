@@ -15,17 +15,7 @@ class Solution
 
     public function solve(): string
     {
-        $file = new SplFileObject("input");
-        $input = [];
-        $message = '';
-
-        while (!$file->eof()) {
-            $line = trim($file->fgets());
-            $input[] = $line;
-        }
-
-        $stackInput = array_slice($input, 0, self::NUMBER_OF_INITIAL_LAYERS);
-        $instructionInput = array_slice($input, self::STARTING_LINE_NUMBER_OF_INSTRUCTION);
+        [$stackInput, $instructionInput] = $this->getInput('input');
 
         $stacks = $this->getStacks($stackInput);
 
@@ -33,12 +23,33 @@ class Solution
 
         $this->moveCrates($stacks, $instructions);
 
-        // find the first crate of each stack
-        foreach ($stacks as $stack) {
-            $message .= $stack->peek();
+        return $this->getMessage($stacks);
+    }
+
+    public function getInput(string $filename): array
+    {
+        $file = new SplFileObject($filename);
+        $input = [];
+
+        while (!$file->eof()) {
+            $line = trim($file->fgets());
+            $input[] = $line;
         }
 
-        return $message;
+        $stackInput = $this->getStackInput($input);
+        $instructionInput = $this->getInstructionInput($input);
+
+        return [$stackInput, $instructionInput];
+    }
+
+    private function getStackInput(array $input): array
+    {
+        return array_slice($input, 0, self::NUMBER_OF_INITIAL_LAYERS);
+    }
+
+    private function getInstructionInput(array $input): array
+    {
+        return array_slice($input, self::STARTING_LINE_NUMBER_OF_INSTRUCTION);
     }
 
     private function getStacks(array $stackInput): array
@@ -74,7 +85,7 @@ class Solution
         return $stacks;
     }
 
-    private function formatStackInput(array $stackInput): array
+    public function formatStackInput(array $stackInput): array
     {
         // replace [ or ] with one space for each crate
         $format = function (string $string) {
@@ -84,7 +95,7 @@ class Solution
         return array_map($format, $stackInput);
     }
 
-    private function getStackPositions(array $stackData): array
+    public function getStackPositions(array $stackData): array
     {
         preg_match_all(
             '/[A-Z]/',
@@ -99,7 +110,7 @@ class Solution
         }, $matches[0]);
     }
 
-    private function getInstructions(array $instructionInput): array
+    public function getInstructions(array $instructionInput): array
     {
         $instructions = [];
 
@@ -128,5 +139,17 @@ class Solution
                 $stacks[$target]->push($crate);
             }
         }
+    }
+
+    private function getMessage(array $stacks): string
+    {
+        $message = '';
+
+        // concat the first crate of each stack
+        foreach ($stacks as $stack) {
+            $message .= $stack->peek();
+        }
+
+        return $message;
     }
 }
