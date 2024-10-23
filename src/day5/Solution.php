@@ -9,7 +9,7 @@ use SplFileObject;
 
 class Solution
 {
-    private const int NUMBER_OF_STACKS = 9;
+    public const int NUMBER_OF_STACKS = 9;
     private const int NUMBER_OF_INITIAL_LAYERS = 8;
     private const int STARTING_LINE_NUMBER_OF_INSTRUCTION = 10;
 
