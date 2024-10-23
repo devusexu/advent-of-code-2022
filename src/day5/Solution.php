@@ -56,14 +56,12 @@ class Solution
     {
         $stacks = $this->initializeStacks();
 
-        $stackData = $this->formatStackInput($stackInput);
-
-        $positions = $this->getStackPositions($stackData);
+        $positions = $this->getStackPositions($stackInput);
 
         // start from the bottom crate, push each layer into stacks
-        for ($i = count($stackData) - 1; $i >= 0; $i--) {
+        for ($i = count($stackInput) - 1; $i >= 0; $i--) {
             foreach ($positions as $key => $position) {
-                $crate = $stackData[$i][$position] ?? ' ';
+                $crate = $stackInput[$i][$position] ?? ' ';
 
                 if ($crate !== ' ') {
                     $stacks[$key + 1]->push($crate);
@@ -83,16 +81,6 @@ class Solution
         }
 
         return $stacks;
-    }
-
-    public function formatStackInput(array $stackInput): array
-    {
-        // replace [ or ] with one space for each crate
-        $format = function (string $string) {
-            return preg_replace('/[\[\]]/', ' ', $string);
-        };
-
-        return array_map($format, $stackInput);
     }
 
     public function getStackPositions(array $stackData): array
